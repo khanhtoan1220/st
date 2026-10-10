@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Người mẹ xinh đẹp trong lòng bàn tay · Thanh trạng thái</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    min-height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: transparent;
+    padding: 20px;
+    font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+.status-container {
+    width: 100%;
+    max-width: 520px;
+    border-radius: 28px;
+    border: 1px solid hsla(42, 30%, 55%, 0.12);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: hsla(350, 18%, 10%, 0.9);
+}
+.status-container::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(ellipse at 30% 20%, hsla(42, 60%, 45%, 0.04), transparent 60%);
+    animation: shimmer 10s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes shimmer {
+    0% { transform: translate(-5%, -5%) scale(1); opacity: 0.4; }
+    100% { transform: translate(5%, 5%) scale(1.1); opacity: 0.8; }
+}
+.status-container > * { position: relative; z-index: 1; }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 12px;
+    border-bottom: 1px solid hsla(42, 20%, 50%, 0.1);
+    margin-bottom: 12px;
+}
+.header-left { flex: 1; min-width: 0; }
+.header-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: hsl(42, 60%, 65%);
+    margin-bottom: 4px;
+}
+.header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+    color: hsla(42, 20%, 70%, 0.7);
+}
+.header-meta span { display: flex; align-items: center; gap: 4px; }
+.header-meta .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: hsl(42, 60%, 55%);
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+}
+.header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.father-warning {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: hsla(350, 60%, 50%, 0.2);
+    color: hsl(350, 70%, 70%);
+    border: 1px solid hsla(350, 60%, 50%, 0.3);
+    animation: warnPulse 2s ease-in-out infinite;
+}
+@keyframes warnPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+.fold-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: hsla(42, 20%, 70%, 0.4);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+.fold-btn:hover { color: hsla(42, 30%, 80%, 0.8); }
+.fold-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s;
+}
+.status-container.collapsed .fold-btn svg { transform: rotate(-90deg); }
+.status-container.collapsed .role-hero,
+.status-container.collapsed .l2,
+.status-container.collapsed .l3 { display: none; }
+
+/* ============ Thẻ nhân vật (đầu bảng chính) ============ */
+.role-hero {
+    display: flex;
+    gap: 14px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, hsla(350, 40%, 20%, 0.25), hsla(42, 30%, 20%, 0.1));
+    border: 1px solid hsla(42, 30%, 50%, 0.12);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+/* Ảnh đại diện bảng chính: chữ nhật đứng 72x96 */
+.role-hero-avatar {
+    width: 72px;
+    height: 96px;
+    border-radius: 14px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid hsla(42, 60%, 55%, 0.3);
+    background: hsla(42, 20%, 15%, 0.6);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+}
+.role-hero-avatar:hover {
+    border-color: hsla(42, 60%, 55%, 0.6);
+    transform: scale(1.03);
+}
+.role-hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+.role-hero-content {
+    flex: 1;
+    min-width: 0;
+}
+.role-hero-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: hsl(42, 65%, 75%);
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+.role-hero-subtitle {
+    font-size: 11px;
+    color: hsla(42, 30%, 80%, 0.7);
+    letter-spacing: 0.2px;
+    margin-bottom: 5px;
+}
+.role-hero-desc {
+    font-size: 10px;
+    color: hsla(42, 25%, 75%, 0.55);
+    letter-spacing: 0.1px;
+    line-height: 1.5;
+}
+
+.l2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.ring-card {
+    background: hsla(350, 15%, 14%, 0.6);
+    border: 1px solid hsla(42, 20%, 50%, 0.1);
+    border-radius: 16px;
+    padding: 14px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ring-wrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 6px;
+}
+.ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-bg {
+    fill: none;
+    stroke: hsla(42, 20%, 50%, 0.1);
+    stroke-width: 6;
+}
+.ring-fill {
+    fill: none;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease;
+}
+.ring-fill.intimacy { stroke: hsl(350, 65%, 60%); }
+.ring-fill.submit { stroke: hsl(280, 55%, 65%); }
+.ring-value {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: hsla(42, 30%, 90%, 0.95);
+}
+.ring-value .unit {
+    font-size: 9px;
+    font-weight: 400;
+    color: hsla(42, 20%, 70%, 0.5);
+}
+.ring-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: hsla(42, 25%, 75%, 0.85);
+}
+
+.relation-info {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, hsla(350, 40%, 20%, 0.3), hsla(42, 30%, 20%, 0.15));
+    border-radius: 14px;
+    border-left: 3px solid hsl(42, 60%, 55%);
+}
+.relation-status {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: hsl(42, 60%, 70%);
+    letter-spacing: 0.3px;
+}
+.emotion-tag {
+    flex-shrink: 0;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    background: hsla(42, 40%, 50%, 0.15);
+    color: hsl(42, 50%, 75%);
+    border: 1px solid hsla(42, 40%, 50%, 0.2);
+}
+.badges {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.badge {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+.badge.pregnant {
+    background: hsla(350, 60%, 50%, 0.2);
+    color: hsl(350, 70%, 75%);
+    border: 1px solid hsla(350, 60%, 50%, 0.3);
+}
+.badge.master {
+    background: hsla(280, 50%, 50%, 0.2);
+    color: hsl(280, 60%, 80%);
+    border: 1px solid hsla(280, 50%, 50%, 0.3);
+}
+.badge.tattoo {
+    background: hsla(42, 60%, 45%, 0.2);
+    color: hsl(42, 60%, 75%);
+    border: 1px solid hsla(42, 60%, 45%, 0.3);
+}
+
+.detail-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 9px 0;
+    background: hsla(42, 40%, 50%, 0.08);
+    border: 1px solid hsla(42, 40%, 50%, 0.15);
+    border-radius: 12px;
+    color: hsl(42, 50%, 70%);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+.detail-btn:hover {
+    background: hsla(42, 40%, 50%, 0.15);
+    border-color: hsla(42, 40%, 50%, 0.3);
+    transform: translateY(-1px);
+}
+.detail-btn svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.l3 {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.panel {
+    background: hsla(350, 15%, 14%, 0.5);
+    border: 1px solid hsla(42, 20%, 50%, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+}
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    cursor: pointer;
+    user-select: none;
+}
+.panel-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: hsla(42, 25%, 80%, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.panel-title svg {
+    width: 14px;
+    height: 14px;
+    stroke: hsl(42, 50%, 65%);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.panel-toggle {
+    font-size: 10px;
+    color: hsla(42, 20%, 60%, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.panel-toggle svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.3s;
+}
+.panel.open .panel-toggle svg { transform: rotate(180deg); }
+.panel-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 14px;
+}
+.panel.open .panel-body {
+    max-height: 600px;
+    padding: 0 14px 14px;
+}
+
+.char-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 6px;
+    border-bottom: 1px solid hsla(42, 20%, 50%, 0.05);
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 0 -6px;
+    transition: background 0.2s;
+}
+.char-row:last-child { border-bottom: none; }
+.char-row:hover { background: hsla(42, 40%, 50%, 0.06); }
+.char-row::after {
+    content: '\203A';
+    font-size: 16px;
+    color: hsla(42, 20%, 60%, 0.4);
+    flex-shrink: 0;
+}
+.char-avatar-sm {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid hsla(42, 60%, 55%, 0.3);
+    background: hsla(42, 20%, 15%, 0.6);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.char-avatar-sm:hover {
+    transform: scale(1.15);
+    border-color: hsla(42, 60%, 55%, 0.7);
+}
+.char-avatar-sm img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.char-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: hsla(42, 25%, 85%, 0.9);
+    width: 72px;
+    flex-shrink: 0;
+}
+.char-bar {
+    flex: 1;
+    min-width: 24px;
+    height: 6px;
+    background: hsla(42, 20%, 50%, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.char-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.6s ease;
+}
+.char-bar-fill.yiyi {
+    background: linear-gradient(90deg, hsl(350, 60%, 50%), hsl(350, 70%, 65%));
+}
+.char-bar-fill.linyi {
+    background: linear-gradient(90deg, hsl(280, 50%, 55%), hsl(280, 60%, 70%));
+}
+.char-bar-fill.hansu {
+    background: linear-gradient(90deg, hsl(42, 60%, 50%), hsl(42, 70%, 65%));
+}
+.char-status {
+    font-size: 10px;
+    color: hsla(42, 20%, 70%, 0.6);
+    width: 92px;
+    text-align: right;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.world-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.world-cell {
+    background: hsla(42, 20%, 50%, 0.04);
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+.world-cell .label {
+    font-size: 9px;
+    color: hsla(42, 20%, 70%, 0.5);
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+}
+.world-cell .value {
+    font-size: 12px;
+    font-weight: 600;
+    color: hsla(42, 25%, 88%, 0.9);
+}
+
+/* ============ Ngăn kéo chi tiết ============ */
+.drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: hsl(350, 15%, 8%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid hsla(42, 20%, 50%, 0.1);
+    flex-shrink: 0;
+}
+.drawer-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: hsl(42, 60%, 70%);
+}
+.drawer-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: hsla(42, 20%, 70%, 0.5);
+    font-size: 20px;
+    padding: 4px 8px;
+    font-family: inherit;
+    line-height: 1;
+    transition: color 0.3s;
+}
+.drawer-close:hover { color: hsl(42, 60%, 75%); }
+
+.drawer-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 12px 20px 0;
+    border-bottom: 1px solid hsla(42, 20%, 50%, 0.08);
+    flex-shrink: 0;
+}
+.drawer-tab {
+    flex: 1;
+    padding: 9px 0;
+    background: none;
+    border: none;
+    color: hsla(42, 20%, 70%, 0.4);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    font-family: inherit;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.3s;
+}
+.drawer-tab:hover { color: hsla(42, 30%, 80%, 0.7); }
+.drawer-tab.active {
+    color: hsl(42, 60%, 70%);
+    border-bottom-color: hsl(42, 60%, 55%);
+}
+
+/* ============ Thanh cuộn tích hợp ============ */
+.drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px 24px;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: hsla(42, 55%, 58%, 0.4) transparent;
+}
+.drawer-content::-webkit-scrollbar { width: 5px; height: 5px; }
+.drawer-content::-webkit-scrollbar-track { background: transparent; margin: 8px 0; }
+.drawer-content::-webkit-scrollbar-thumb {
+    background: hsla(42, 55%, 58%, 0.4);
+    border-radius: 99px;
+    transition: background 0.3s ease;
+}
+.drawer-content::-webkit-scrollbar-thumb:hover { background: hsla(42, 60%, 65%, 0.7); }
+.drawer-content::-webkit-scrollbar-corner { background: transparent; }
+
+.drawer-pane { display: none; }
+.drawer-pane.active { display: block; }
+
+/* Thẻ giới thiệu nhân vật trong ngăn kéo (có ảnh đại diện) */
+.char-hero {
+    background: linear-gradient(135deg, hsla(350, 40%, 20%, 0.3), hsla(42, 30%, 20%, 0.15));
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    border: 1px solid hsla(42, 30%, 50%, 0.15);
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+/* Ảnh đại diện trong ngăn kéo: chữ nhật đứng 64x88 */
+.char-hero-avatar {
+    width: 64px;
+    height: 88px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid hsla(42, 60%, 55%, 0.3);
+    background: hsla(42, 20%, 15%, 0.6);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+}
+.char-hero-avatar:hover {
+    border-color: hsla(42, 60%, 55%, 0.6);
+    transform: scale(1.03);
+}
+.char-hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+.char-hero-text { flex: 1; min-width: 0; }
+.char-hero .name {
+    font-size: 15px;
+    font-weight: 700;
+    color: hsl(42, 65%, 75%);
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+.char-hero .sub {
+    font-size: 11px;
+    color: hsla(42, 30%, 80%, 0.7);
+    letter-spacing: 0.2px;
+    margin-bottom: 5px;
+}
+.char-hero .desc {
+    font-size: 10px;
+    color: hsla(42, 25%, 75%, 0.55);
+    letter-spacing: 0.1px;
+    line-height: 1.5;
+}
+.char-hero .relation {
+    font-size: 11px;
+    font-weight: 700;
+    color: hsl(350, 65%, 70%);
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: hsla(350, 60%, 50%, 0.15);
+    border: 1px solid hsla(350, 60%, 50%, 0.25);
+    letter-spacing: 0.2px;
+    flex-shrink: 0;
+    align-self: flex-start;
+    max-width: 112px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.milestone-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+.milestone-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    line-height: 1.3;
+    background: hsla(42, 20%, 50%, 0.04);
+    border: 1px solid hsla(42, 20%, 50%, 0.06);
+}
+.milestone-item.done {
+    background: hsla(42, 50%, 50%, 0.08);
+    border-color: hsla(42, 50%, 50%, 0.2);
+    color: hsl(42, 55%, 75%);
+}
+.milestone-item.undone { color: hsla(42, 15%, 65%, 0.4); }
+.milestone-item .check {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+}
+.milestone-item.done .check {
+    background: hsl(42, 60%, 55%);
+    color: hsl(350, 15%, 8%);
+}
+.milestone-item.undone .check {
+    background: hsla(42, 20%, 50%, 0.15);
+    color: hsla(42, 20%, 70%, 0.4);
+}
+
+.count-list { display: flex; flex-direction: column; gap: 8px; }
+.count-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: hsla(42, 20%, 50%, 0.04);
+    border-radius: 10px;
+    border: 1px solid hsla(42, 20%, 50%, 0.06);
+}
+.count-label {
+    font-size: 12px;
+    color: hsla(42, 25%, 80%, 0.8);
+}
+.count-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: hsl(42, 60%, 70%);
+}
+
+.mark-list { display: flex; flex-direction: column; gap: 8px; }
+.mark-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: hsla(42, 20%, 50%, 0.04);
+    border-radius: 10px;
+    border: 1px solid hsla(42, 20%, 50%, 0.06);
+}
+.mark-label {
+    font-size: 12px;
+    color: hsla(42, 25%, 80%, 0.8);
+}
+.mark-value {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+.mark-value.yes {
+    background: hsla(140, 50%, 50%, 0.2);
+    color: hsl(140, 60%, 70%);
+}
+.mark-value.no {
+    background: hsla(42, 20%, 50%, 0.1);
+    color: hsla(42, 20%, 70%, 0.5);
+}
+
+.chapter-progress {
+    background: linear-gradient(135deg, hsla(350, 40%, 20%, 0.3), hsla(42, 30%, 20%, 0.15));
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    border: 1px solid hsla(42, 30%, 50%, 0.15);
+}
+.chapter-progress .label {
+    font-size: 10px;
+    color: hsla(42, 20%, 70%, 0.6);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+.chapter-progress .value {
+    font-size: 20px;
+    font-weight: 800;
+    color: hsl(42, 65%, 72%);
+    margin-bottom: 8px;
+}
+.chapter-progress .value .suffix {
+    font-size: 13px;
+    font-weight: 400;
+    color: hsla(42, 20%, 70%, 0.4);
+}
+.chapter-progress .bar {
+    height: 6px;
+    background: hsla(42, 20%, 50%, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.chapter-progress .bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, hsl(350, 60%, 50%), hsl(42, 70%, 65%));
+    border-radius: 3px;
+    transition: width 0.8s ease;
+}
+
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 1.5px;
+    background: hsla(42, 30%, 50%, 0.15);
+}
+.timeline-item {
+    position: relative;
+    padding: 6px 0 6px 14px;
+    font-size: 11px;
+    color: hsla(42, 20%, 70%, 0.6);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: hsla(42, 20%, 50%, 0.15);
+    border: 1.5px solid hsla(42, 20%, 50%, 0.25);
+}
+.timeline-item.done::before {
+    background: hsl(42, 55%, 55%);
+    border-color: hsl(42, 55%, 55%);
+}
+.timeline-item.current {
+    color: hsl(42, 65%, 72%);
+    font-weight: 600;
+}
+.timeline-item.current::before {
+    background: hsl(350, 65%, 60%);
+    border-color: hsl(350, 65%, 60%);
+    box-shadow: 0 0 12px hsla(350, 65%, 60%, 0.5);
+}
+.timeline-item .num {
+    font-size: 10px;
+    color: hsla(42, 20%, 70%, 0.4);
+    width: 62px;
+    flex-shrink: 0;
+}
+
+/* ============ Lớp phủ phóng to ảnh ============ */
+.image-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    cursor: pointer;
+}
+.image-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+.image-overlay .overlay-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: default;
+}
+.image-overlay.active .overlay-content {
+    transform: scale(1);
+}
+.image-overlay .overlay-content img {
+    width: 100%;
+    height: 100%;
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    display: block;
+}
+.image-overlay .close-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: hsla(0, 0%, 100%, 0.06);
+    border-radius: 50%;
+    color: hsla(0, 0%, 100%, 0.4);
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+    line-height: 1;
+}
+.image-overlay .close-btn:hover {
+    background: hsla(0, 0%, 100%, 0.12);
+    color: hsla(0, 0%, 100%, 0.8);
+    transform: rotate(90deg);
+}
+
+@media (max-width: 460px) {
+    .status-container { padding: 14px; border-radius: 22px; }
+    .header-title { font-size: 13px; }
+    .header-meta { font-size: 10px; gap: 6px; }
+    .ring-wrap { width: 68px; height: 68px; }
+    .ring-value { font-size: 17px; }
+    .milestone-grid { grid-template-columns: 1fr; }
+    .world-grid { grid-template-columns: 1fr; }
+    .role-hero-avatar { width: 60px; height: 80px; }
+    .role-hero-name { font-size: 14px; }
+    .role-hero-subtitle { font-size: 10px; }
+    .role-hero-desc { font-size: 9px; }
+    .char-hero-avatar { width: 54px; height: 74px; }
+    .char-name { width: 64px; }
+    .char-status { width: 78px; }
+    .image-overlay .close-btn { top: 12px; right: 12px; width: 36px; height: 36px; font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ Lớp phủ phóng to ảnh ============ -->
+<div class="image-overlay" id="imageOverlay" onclick="closeImageOverlay()">
+    <button class="close-btn" onclick="closeImageOverlay()">✕</button>
+    <div class="overlay-content" onclick="event.stopPropagation()">
+        <img id="overlayImage" src="" alt="Xem ảnh phóng to" />
+    </div>
+</div>
+
+<div class="status-container" id="app">
+    <div class="header">
+        <div class="header-left">
+            <div class="header-title" id="headerTitle">Trạng thái · --</div>
+            <div class="header-meta">
+                <span id="hTime">--</span>
+                <span class="dot"></span>
+                <span id="hPlace">--</span>
+                <span>·</span>
+                <span id="hSeasonWeather">--</span>
+                <span>·</span>
+                <span id="hActivity">--</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="father-warning" id="fatherWarning" style="display:none;">&#9888; Cha đang ở nhà</div>
+            <button class="fold-btn" onclick="toggleFold()" aria-label="Thu gọn / mở rộng">
+                <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Thẻ nhân vật (Liễu Như Ngọc) -->
+    <div class="role-hero" id="roleHero">
+        <div class="role-hero-avatar" onclick="openImageOverlay(document.getElementById('roleHeroImg').src)">
+            <img id="roleHeroImg" src="" alt="Liễu Như Ngọc" />
+        </div>
+        <div class="role-hero-content">
+            <div class="role-hero-name" id="roleHeroName">Liễu Như Ngọc</div>
+            <div class="role-hero-subtitle" id="roleHeroSubtitle">Giảng viên văn học cổ điển đại học</div>
+            <div class="role-hero-desc" id="roleHeroDesc">--</div>
+        </div>
+    </div>
+
+    <div class="l2">
+        <div class="ring-card">
+            <div class="ring-wrap">
+                <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                    <circle class="ring-fill intimacy" id="ringIntimacy" cx="40" cy="40" r="34"
+                        stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+                </svg>
+                <div class="ring-value"><span id="valIntimacy">0</span><span class="unit">/1000</span></div>
+            </div>
+            <div class="ring-label">Thân mật</div>
+        </div>
+
+        <div class="ring-card">
+            <div class="ring-wrap">
+                <svg viewBox="0 0 80 80">
+                    <circle class="ring-bg" cx="40" cy="40" r="34"/>
+                    <circle class="ring-fill submit" id="ringSubmit" cx="40" cy="40" r="34"
+                        stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+                </svg>
+                <div class="ring-value"><span id="valSubmit">0</span><span class="unit">/1000</span></div>
+            </div>
+            <div class="ring-label">Thuận phục</div>
+        </div>
+
+        <div class="relation-info">
+            <div class="relation-status" id="relationStatus">--</div>
+            <div class="emotion-tag" id="emotionTag">--</div>
+        </div>
+
+        <div class="badges" id="badges"></div>
+
+        <button class="detail-btn" onclick="openDrawer('liuruoyu')">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Xem chi tiết đầy đủ của Liễu Như Ngọc
+        </button>
+    </div>
+
+    <div class="l3">
+        <div class="panel open" id="panel-chars">
+            <div class="panel-header" onclick="togglePanel('panel-chars')">
+                <div class="panel-title">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    Nhân vật khác
+                </div>
+                <div class="panel-toggle">Mở rộng <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+            </div>
+            <div class="panel-body">
+                <div class="char-row" onclick="openDrawer('zhouyiyi')">
+                    <div class="char-avatar-sm" onclick="event.stopPropagation(); openImageOverlay(this.querySelector('img').src);">
+                        <img id="avatarYiyi" src="" alt="Chu Y Y" />
+                    </div>
+                    <div class="char-name">Chu Y Y</div>
+                    <div class="char-bar"><div class="char-bar-fill yiyi" id="barYiyi" style="width:0%"></div></div>
+                    <div class="char-status" id="statusYiyi">--</div>
+                </div>
+                <div class="char-row" onclick="openDrawer('zhoulinyi')">
+                    <div class="char-avatar-sm" onclick="event.stopPropagation(); openImageOverlay(this.querySelector('img').src);">
+                        <img id="avatarLinyi" src="" alt="Chu Lâm Y" />
+                    </div>
+                    <div class="char-name">Chu Lâm Y</div>
+                    <div class="char-bar"><div class="char-bar-fill linyi" id="barLinyi" style="width:0%"></div></div>
+                    <div class="char-status" id="statusLinyi">--</div>
+                </div>
+                <div class="char-row" onclick="openDrawer('hansu')">
+                    <div class="char-avatar-sm" onclick="event.stopPropagation(); openImageOverlay(this.querySelector('img').src);">
+                        <img id="avatarHansu" src="" alt="Hàn Tố" />
+                    </div>
+                    <div class="char-name">Hàn Tố</div>
+                    <div class="char-bar"><div class="char-bar-fill hansu" id="barHansu" style="width:0%"></div></div>
+                    <div class="char-status" id="statusHansu">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel" id="panel-world">
+            <div class="panel-header" onclick="togglePanel('panel-world')">
+                <div class="panel-title">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    Trạng thái thế giới
+                </div>
+                <div class="panel-toggle">Mở rộng <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
+            </div>
+            <div class="panel-body">
+                <div class="world-grid">
+                    <div class="world-cell"><div class="label">Thời gian</div><div class="value" id="wTime">--</div></div>
+                    <div class="world-cell"><div class="label">Mùa</div><div class="value" id="wSeason">--</div></div>
+                    <div class="world-cell"><div class="label">Thời tiết</div><div class="value" id="wWeather">--</div></div>
+                    <div class="world-cell"><div class="label">Khung giờ</div><div class="value" id="wPeriod">--</div></div>
+                    <div class="world-cell"><div class="label">Địa điểm</div><div class="value" id="wPlace">--</div></div>
+                    <div class="world-cell"><div class="label">Bối cảnh</div><div class="value" id="wScene">--</div></div>
+                    <div class="world-cell"><div class="label">Hoạt động</div><div class="value" id="wActivity">--</div></div>
+                    <div class="world-cell"><div class="label">Cha</div><div class="value" id="wFather">--</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ngăn kéo chi tiết -->
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <div class="drawer-title" id="drawerTitle">Liễu Như Ngọc · Chi tiết đầy đủ</div>
+            <button class="drawer-close" onclick="closeDrawer()">&#10005;</button>
+        </div>
+        <div class="drawer-tabs" id="drawerTabs"></div>
+        <div class="drawer-content" id="drawerContent"></div>
+    </div>
+</div>
+
+<script>
+var FOLD_KEY = 'statusBarCollapsed';
+
+/* ============================================================
+   Tiền tố CDN ảnh đại diện (giữ nguyên, tên file ảnh là tiếng Trung)
+   ============================================================ */
+var AVATAR_BASE = 'https://testingcf.jsdelivr.net/gh/sanshui19516/CG@main/%E6%8E%8C%E4%B8%AD%E7%9A%84%E7%BE%8E%E6%AF%8D/';
+
+/* ============================================================
+   Tên chương (lấy từ bộ điều khiển tiêu đề chương của worldbook)
+   ============================================================ */
+var CHAPTER_NAMES = {
+    "Chương 1": "Kế hoạch bắt đầu",
+    "Chương 2": "Chu Y Y",
+    "Chương 3": "Đồng tính luyến ái?",
+    "Chương 4": "Bước ngoặt",
+    "Chương 5": "Ngủ cùng mẹ",
+    "Chương 6": "Massage lần nữa",
+    "Chương 7": "Được đằng chân lân đằng đầu",
+    "Chương 8": "Rời nhà",
+    "Chương 9": "Phá trinh",
+    "Chương 10": "Lần thứ hai nở hoa",
+    "Chương 11": "Chị gái",
+    "Chương 12": "Về nhà",
+    "Chương 13": "Tâm sự",
+    "Chương 14": "Đêm quấn quýt",
+    "Chương 15": "Thủ dâm bằng chân mang tất",
+    "Chương 16": "Thanh kiếm Damocles",
+    "Chương 17": "Bố về nhà",
+    "Chương 18": "Sóng gió nổi lên",
+    "Chương 19": "Giữa những lần giằng co",
+    "Chương 20": "Khúc dạo đầu trái đạo đức",
+    "Chương 21": "Màn trình diễn dâm mỹ",
+    "Chương 22": "Khúc nhạc đệm mập mờ",
+    "Chương 23": "Cực khoái trong cơn mưa rào",
+    "Chương 24": "Sự phản kích của mẹ",
+    "Chương 25": "Không được chạm vào con",
+    "Chương 26": "Đánh vào mông",
+    "Chương 27": "Xuất tinh khi nuốt sâu",
+    "Chương 28": "Còn có lần sau?",
+    "Chương 29": "Thường nhật khi về nhà",
+    "Chương 30": "Địt mẹ trước mặt bố",
+    "Chương 31": "Cuồng nhiệt trong nhà vệ sinh",
+    "Chương 32": "Bắt đầu ở nội trú",
+    "Chương 33": "Huấn luyện qua tin nhắn tình dục",
+    "Chương 34": "Bí mật nhỏ của mẹ",
+    "Chương 35": "Đồ chơi",
+    "Chương 36": "Nuốt sâu lần nữa",
+    "Chương 37": "Nếm thử giao hợp hậu môn",
+    "Chương 38": "",
+    "Chương 39": "",
+    "Chương 40": "",
+    "Chương 41": "Chuyện thường ngày nhỏ",
+    "Chương 42": "Thủ dâm bằng chân trong nhà hàng",
+    "Chương 43": "Yêu",
+    "Chương 44": "Dục",
+    "Chương 45": "Loạn",
+    "Chương 46": "",
+    "Chương 47": "",
+    "Chương 48": "",
+    "Chương 49": "Người mẹ biết nghe lời",
+    "Chương 50": "Đêm tối",
+    "Chương 51": "",
+    "Chương 52": "",
+    "Chương 53": "",
+    "Chương 54": "",
+    "Chương 55": "",
+    "Chương 56": "",
+    "Chương 57": "",
+    "Chương 58": "",
+    "Chương 59": "",
+    "Chương 60": "",
+    "Chương 61": "",
+    "Chương 62": "",
+    "Chương 63": "",
+    "Chương 64": "",
+    "Chương 65": "",
+    "Chương 66": "Chuyện một ngày: Trứng rung",
+    "Chương 67": "Chuyện một ngày: Quay phim",
+    "Chương 68": "Chuyện một ngày: Chó cái",
+    "Chương 69": "Chuyện một ngày: Ra ngoài",
+    "Chương 70": "Chuyện một ngày: Triển lãm anime",
+    "Chương 71": "Nhà vệ sinh",
+    "Chương 72": "Rửa sạch",
+    "Chương 73": "Vòng cổ",
+    "Chương 74": "Dắt chó đi dạo",
+    "Chương 75": "Lấp đầy",
+    "Chương 76": "Hồi ức của mẹ (Ngoại truyện 1)",
+    "Chương 77": "Hồi ức của mẹ (Ngoại truyện 2)",
+    "Chương 78": "Hồi ức của mẹ (Ngoại truyện 3)",
+    "Chương 79": "Hồi ức của mẹ (Ngoại truyện 4)",
+    "Chương 80": "Thường nhật",
+    "Chương 81": "",
+    "Chương 82": "",
+    "Chương 83": "",
+    "Chương 84": "",
+    "Chương 85": "",
+    "Chương 86": "",
+    "Chương 87": "",
+    "Chương 88": "",
+    "Chương 89": "",
+    "Chương 90": "",
+    "Chương 91": "",
+    "Chương 92": "",
+    "Chương 93": "",
+    "Chương 94": "",
+    "Chương 95": "",
+    "Chương 96": "",
+    "Chương 97": "",
+    "Chương 98": "",
+    "Chương 99": "",
+    "Chương 100": "",
+    "Chương 101": "",
+    "Chương 102": "",
+    "Chương 103": "",
+    "Chương 104": "",
+    "Chương 105": "",
+    "Chương 106": "",
+    "Chương 107": "",
+    "Chương 108": "",
+    "Chương 109": "",
+    "Chương 110": "Khế ước Chủ Nô",
+    "Chương 111": "Khế ước Chủ Nô",
+    "Chương 112": "",
+    "Chương 113": "",
+    "Chương 114": "",
+    "Chương 115": "",
+    "Chương 116": "",
+    "Chương 117": "",
+    "Chương 118": "",
+    "Chương 119": "",
+    "Chương 120": "Đại kết cục"
+};
+
+/* ============================================================
+   Hồ sơ nhân vật: khoá giai đoạn = đúng giá trị enum trong schema
+   ============================================================ */
+var PROFILE = {
+    liuruoyu: {
+        name: 'Liễu Như Ngọc',
+        subtitle: 'Giảng viên văn học cổ điển đại học',
+        stages: {
+            'Mẹ con bình thường': { key: '%E6%9F%B3%E5%A6%82%E7%8E%89-%E5%AF%BB%E5%B8%B8%E6%AF%8D%E5%AD%90.jpg', desc: 'Ngày thường đoan trang tri thức, là người mẹ tốt trong mắt con trai' },
+            'Sinh lòng cảnh giác': { key: '%E6%9F%B3%E5%A6%82%E7%8E%89-%E5%BF%83%E7%94%9F%E6%88%92%E5%A4%87.jpg', desc: 'Phát hiện dục vọng của con trai, ở nhà ăn mặc kín đáo, xử lý lạnh nhạt' },
+            'Tâm phòng thủ lỏng lẻo': { key: '%E6%9F%B3%E5%A6%82%E7%8E%89-%E5%BF%83%E9%98%B2%E6%9D%BE%E5%8A%A8.jpg', desc: 'Ngầm chấp nhận ngủ chung, thủ dâm bằng chân, bú cu; nói "đừng nghịch" nhưng không phản kháng quyết liệt' },
+            'Thân bất do kỷ': { key: '%E6%9F%B3%E5%A6%82%E7%8E%89-%E8%BA%AB%E4%B8%8D%E7%94%B1%E5%B7%B1.jpg', desc: 'Biết lên đỉnh, biết phối hợp, nhưng trong lòng thấy có lỗi với chồng' },
+            'Thân tâm trầm luân': { key: '%E6%9F%B3%E5%A6%82%E7%8E%89-%E8%BA%AB%E5%BF%83%E6%B2%89%E6%B2%A6.jpg', desc: 'Bắt đầu chủ động hôn, chủ động phối hợp, chủ động gọi "bố"' },
+            'Ngọc Nô thần phục': { key: '%E6%9F%B3%E5%A6%82%E7%8E%89-%E7%8E%89%E5%A5%B4%E8%87%A3%E6%9C%8D.jpg', desc: 'Ký Khế ước Chủ Nô, được ban tên "Ngọc Nô", gọi chủ nhân' }
+        }
+    },
+    zhouyiyi: {
+        name: 'Chu Y Y',
+        subtitle: 'Bạn cùng lớp · Em gái song sinh · Nhảy đường phố',
+        stages: {
+            'Người xa lạ': { key: '%E5%91%A8%E4%BE%9D%E4%BE%9D-%E9%99%8C%E7%94%9F%E4%BA%BA.jpg', desc: 'Quen nhau vì sự cố khay cơm, phóng khoáng thẳng tính' },
+            'Bạn học': { key: '%E5%91%A8%E4%BE%9D%E4%BE%9D-%E5%90%8C%E5%AD%A6.jpg', desc: 'Mời ăn cơm, hay đùa vài câu, dần dần thân quen' },
+            'Người yêu': { key: '%E5%91%A8%E4%BE%9D%E4%BE%9D-%E6%81%8B%E4%BA%BA.jpg', desc: 'Chủ động tỏ tình, xác định quan hệ, thích {{user}}' },
+            'Chấp nhận quan hệ đa giác': { key: '%E5%91%A8%E4%BE%9D%E4%BE%9D-%E6%8E%A5%E5%8F%97%E5%A4%9A%E8%A7%92%E5%85%B3%E7%B3%BB.jpg', desc: 'Biết {{user}} đa tình nhưng vẫn chọn ở lại, lặng lẽ chờ đợi' }
+        }
+    },
+    zhoulinyi: {
+        name: 'Chu Lâm Y',
+        subtitle: 'Đàn chị lớp 3 · Chị gái song sinh',
+        stages: {
+            'Người xa lạ': { key: '%E5%91%A8%E7%90%B3%E4%BE%9D-%E9%99%8C%E7%94%9F%E4%BA%BA.jpg', desc: 'Lần đầu gặp mặt, trầm lặng xa cách' },
+            'Mập mờ': { key: '%E5%91%A8%E7%90%B3%E4%BE%9D-%E6%9A%A7%E6%98%A7.jpg', desc: 'Hỏi {{user}} có muốn sờ chân không, thích trêu chọc, tận hưởng quyền kiểm soát' },
+            'Chấp nhận': { key: '%E5%91%A8%E7%90%B3%E4%BE%9D-%E6%8E%A5%E5%8F%97.jpg', desc: 'Thân mật với {{user}} ngay trước mặt em gái, chấp nhận quan hệ đa giác' }
+        }
+    },
+    hansu: {
+        name: 'Hàn Tố',
+        subtitle: 'Mẹ của Chu Y Y · Vợ bác sĩ',
+        stages: {
+            'Người xa lạ': { key: '%E9%9F%A9%E7%B4%A0-%E9%99%8C%E7%94%9F%E4%BA%BA.jpg', desc: 'Gặp lần đầu khi du lịch Hồ Lô Thanh, nhiệt tình cởi mở' },
+            'Bậc trưởng bối': { key: '%E9%9F%A9%E7%B4%A0-%E9%95%BF%E8%BE%88.jpg', desc: 'Học bơi không chịu thua, chủ động nhắn WeChat với {{user}}' },
+            'Mập mờ': { key: '%E9%9F%A9%E7%B4%A0-%E6%9A%A7%E6%98%A7.jpg', desc: 'Chồng quanh năm không ở nhà, trò chuyện với {{user}} ngày càng mập mờ' },
+            'Chấp nhận': { key: '%E9%9F%A9%E7%B4%A0-%E6%8E%A5%E5%8F%97.jpg', desc: 'Biết rõ là bạn trai của con gái nhưng vẫn chấp nhận' }
+        }
+    }
+};
+
+function getProfile(charKey, stage) {
+    var p = PROFILE[charKey];
+    if (!p) return null;
+    var s = p.stages[stage];
+    if (!s) {
+        var stageKeys = Object.keys(p.stages);
+        s = p.stages[stageKeys[0]];
+    }
+    return {
+        name: p.name,
+        subtitle: p.subtitle,
+        avatar: AVATAR_BASE + s.key,
+        desc: s.desc
+    };
+}
+
+/* ============================================================
+   Cột mốc / bộ đếm / cờ hiển thị trong ngăn kéo của từng nhân vật
+   (tên khoá = đúng tên trong schema và InitVar)
+   dataKey: tên nhân vật trong stat_data
+   ============================================================ */
+var CHARS = {
+    liuruoyu: {
+        dataKey: 'Liễu Như Ngọc',
+        milestones: ['Nụ hôn đầu tiên','Bú cu lần đầu','Thủ dâm bằng chân lần đầu','Cắm vào lần đầu','Giao hợp hậu môn lần đầu','Thổi kèn ngập sâu lần đầu','Lần đầu trước mặt cha','Phun sương lần đầu','Lần đầu gọi bố','Lần đầu gọi chủ nhân','Lần đầu mặc váy cưới','Lần đầu xăm hình dâm dục','Lần đầu ký Khế ước Chủ Nô','Mang thai lần đầu'],
+        counts: ['Số lần quan hệ','Số lần bú cu','Số lần thủ dâm bằng chân','Số lần giao hợp hậu môn','Số lần thổi kèn ngập sâu','Số lần huấn luyện','Số lần thân mật thường nhật','Số lần tương tác thường nhật'],
+        marks: [
+            { label: 'Mang thai', key: 'Có mang thai không', yes: 'Có', no: 'Không' },
+            { label: 'Đã ký Khế ước Chủ Nô', key: 'Đã ký Khế ước Chủ Nô chưa', yes: 'Rồi', no: 'Chưa' },
+            { label: 'Đã xăm hình dâm dục', key: 'Đã xăm hình dâm dục chưa', yes: 'Rồi', no: 'Chưa' }
+        ],
+        hasChapter: true, hasMilestone: true, hasCount: true, hasMark: true
+    },
+    /* Ba nhân vật phụ: schema chỉ có Thân mật / Trạng thái quan hệ / Đếm số lần,
+       không có "Cột mốc" nên không hiện tab cột mốc */
+    zhouyiyi: {
+        dataKey: 'Chu Y Y',
+        milestones: [],
+        counts: ['Số lần quan hệ','Số lần bú cu','Số lần thân mật thường nhật'],
+        marks: [],
+        hasChapter: false, hasMilestone: false, hasCount: true, hasMark: false
+    },
+    zhoulinyi: {
+        dataKey: 'Chu Lâm Y',
+        milestones: [],
+        counts: ['Số lần quan hệ','Số lần bú cu'],
+        marks: [],
+        hasChapter: false, hasMilestone: false, hasCount: true, hasMark: false
+    },
+    hansu: {
+        dataKey: 'Hàn Tố',
+        milestones: [],
+        counts: ['Số lần trò chuyện','Số lần chụp ảnh'],
+        marks: [],
+        hasChapter: false, hasMilestone: false, hasCount: true, hasMark: false
+    }
+};
+
+var state = {
+    chapter: 'Chương 1',
+    time: '--', place: '--', season: '--', weather: '--', activity: '--',
+    father: false,
+    intimacy: 0, submit: 0,
+    stage: '--', emotion: '--',
+    pregnant: false, master: false, tattoo: false
+};
+
+var currentDrawerChar = 'liuruoyu';
+var currentDrawerTab = 'chapter';
+var lastSnapshotKey = '';
+
+/* ============================================================
+   Đọc dữ liệu MVU
+   ============================================================ */
+function getMVUData() {
+    try {
+        var allVars = typeof getAllVariables === 'function' ? getAllVariables() : {};
+        return allVars.stat_data || {};
+    } catch (e) {
+        return {};
+    }
+}
+
+function fetchStateFromMVU() {
+    var data = getMVUData();
+    if (!data || Object.keys(data).length === 0) return;
+
+    state.chapter = _.get(data, 'Sự kiện.Chương hiện tại', 'Chương 1');
+    state.time = _.get(data, 'Thế giới.Khung giờ', '--');
+    state.place = _.get(data, 'Thế giới.Địa điểm', '--');
+    state.season = _.get(data, 'Thế giới.Mùa', '--');
+    state.weather = _.get(data, 'Thế giới.Thời tiết', '--');
+    state.activity = _.get(data, 'Thế giới.Hoạt động hiện tại', '--');
+    state.father = _.get(data, 'Thế giới.Cha có ở nhà không', false);
+
+    state.intimacy = _.get(data, 'Liễu Như Ngọc.Thân mật', 0);
+    state.submit = _.get(data, 'Liễu Như Ngọc.Thuận phục', 0);
+    state.stage = _.get(data, 'Liễu Như Ngọc.Trạng thái quan hệ', '--');
+    state.emotion = _.get(data, 'Liễu Như Ngọc.Cảm xúc hiện tại', '--');
+    state.pregnant = _.get(data, 'Liễu Như Ngọc.Có mang thai không', false);
+    state.master = _.get(data, 'Liễu Như Ngọc.Đã ký Khế ước Chủ Nô chưa', false);
+    state.tattoo = _.get(data, 'Liễu Như Ngọc.Đã xăm hình dâm dục chưa', false);
+}
+
+/* ============================================================
+   Hiển thị: phần đầu
+   ============================================================ */
+function renderHeader() {
+    var cur = state.chapter;
+    var name = CHAPTER_NAMES[cur] || '';
+    var el = document.getElementById('headerTitle');
+    if (el) el.textContent = 'Trạng thái · ' + cur + (name ? ' ' + name : '');
+
+    var t = document.getElementById('hTime'); if (t) t.textContent = state.time;
+    var p = document.getElementById('hPlace'); if (p) p.textContent = state.place;
+    var sw = document.getElementById('hSeasonWeather'); if (sw) sw.textContent = state.season + ' · ' + state.weather;
+    var ac = document.getElementById('hActivity'); if (ac) ac.textContent = state.activity;
+
+    var fw = document.getElementById('fatherWarning');
+    if (fw) fw.style.display = state.father ? 'block' : 'none';
+}
+
+/* ============================================================
+   Hiển thị: thẻ nhân vật bảng chính (Liễu Như Ngọc)
+   ============================================================ */
+function renderRoleHero() {
+    var profile = getProfile('liuruoyu', state.stage);
+    if (!profile) return;
+
+    var img = document.getElementById('roleHeroImg');
+    var name = document.getElementById('roleHeroName');
+    var sub = document.getElementById('roleHeroSubtitle');
+    var desc = document.getElementById('roleHeroDesc');
+
+    if (img) img.src = profile.avatar;
+    if (name) name.textContent = profile.name;
+    if (sub) sub.textContent = profile.subtitle;
+    if (desc) desc.textContent = profile.desc;
+}
+
+/* ============================================================
+   Hiển thị: vòng tròn chỉ số chính
+   ============================================================ */
+function renderCore() {
+    var intimacy = Number(state.intimacy) || 0;
+    var submit = Number(state.submit) || 0;
+
+    var vi = document.getElementById('valIntimacy'); if (vi) vi.textContent = intimacy;
+    var vs = document.getElementById('valSubmit'); if (vs) vs.textContent = submit;
+
+    var C = 213.6;
+    var ri = document.getElementById('ringIntimacy');
+    var rs = document.getElementById('ringSubmit');
+    if (ri) ri.setAttribute('stroke-dashoffset', C * (1 - Math.min(Math.max(intimacy, 0), 1000) / 1000));
+    if (rs) rs.setAttribute('stroke-dashoffset', C * (1 - Math.min(Math.max(submit, 0), 1000) / 1000));
+
+    var rst = document.getElementById('relationStatus'); if (rst) rst.textContent = state.stage;
+    var em = document.getElementById('emotionTag'); if (em) em.textContent = state.emotion;
+
+    var badges = '';
+    if (state.pregnant) badges += '<div class="badge pregnant">Đã mang thai</div>';
+    if (state.master) badges += '<div class="badge master">Đã ký Khế ước Chủ Nô</div>';
+    if (state.tattoo) badges += '<div class="badge tattoo">Đã xăm hình dâm dục</div>';
+    var bx = document.getElementById('badges'); if (bx) bx.innerHTML = badges;
+}
+
+/* ============================================================
+   Hiển thị: các dòng nhân vật khác
+   ============================================================ */
+function renderOtherChars() {
+    var data = getMVUData();
+
+    var yiyi = Number(_.get(data, 'Chu Y Y.Thân mật', 0)) || 0;
+    var linyi = Number(_.get(data, 'Chu Lâm Y.Thân mật', 0)) || 0;
+    var hansu = Number(_.get(data, 'Hàn Tố.Thân mật', 0)) || 0;
+
+    var by = document.getElementById('barYiyi'); if (by) by.style.width = Math.min(yiyi / 10, 100) + '%';
+    var bl = document.getElementById('barLinyi'); if (bl) bl.style.width = Math.min(linyi / 10, 100) + '%';
+    var bh = document.getElementById('barHansu'); if (bh) bh.style.width = Math.min(hansu / 10, 100) + '%';
+
+    var stY = _.get(data, 'Chu Y Y.Trạng thái quan hệ', '--');
+    var stL = _.get(data, 'Chu Lâm Y.Trạng thái quan hệ', '--');
+    var stH = _.get(data, 'Hàn Tố.Trạng thái quan hệ', '--');
+
+    var sy = document.getElementById('statusYiyi'); if (sy) { sy.textContent = stY; sy.title = stY; }
+    var sl = document.getElementById('statusLinyi'); if (sl) { sl.textContent = stL; sl.title = stL; }
+    var sh = document.getElementById('statusHansu'); if (sh) { sh.textContent = stH; sh.title = stH; }
+
+    var pYiyi = getProfile('zhouyiyi', stY === '--' ? 'Người xa lạ' : stY);
+    var pLinyi = getProfile('zhoulinyi', stL === '--' ? 'Người xa lạ' : stL);
+    var pHansu = getProfile('hansu', stH === '--' ? 'Người xa lạ' : stH);
+
+    var aY = document.getElementById('avatarYiyi'); if (aY && pYiyi) aY.src = pYiyi.avatar;
+    var aL = document.getElementById('avatarLinyi'); if (aL && pLinyi) aL.src = pLinyi.avatar;
+    var aH = document.getElementById('avatarHansu'); if (aH && pHansu) aH.src = pHansu.avatar;
+}
+
+/* ============================================================
+   Hiển thị: trạng thái thế giới
+   ============================================================ */
+function renderWorld() {
+    var data = getMVUData();
+
+    var wt = document.getElementById('wTime'); if (wt) wt.textContent = _.get(data, 'Thế giới.Thời gian', '--');
+    var ws = document.getElementById('wSeason'); if (ws) ws.textContent = _.get(data, 'Thế giới.Mùa', '--');
+    var ww = document.getElementById('wWeather'); if (ww) ww.textContent = _.get(data, 'Thế giới.Thời tiết', '--');
+    var wp = document.getElementById('wPeriod'); if (wp) wp.textContent = _.get(data, 'Thế giới.Khung giờ', '--');
+    var wpl = document.getElementById('wPlace'); if (wpl) wpl.textContent = _.get(data, 'Thế giới.Địa điểm', '--');
+    var wsc = document.getElementById('wScene'); if (wsc) wsc.textContent = _.get(data, 'Thế giới.Bối cảnh hiện tại', '--');
+    var wa = document.getElementById('wActivity'); if (wa) wa.textContent = _.get(data, 'Thế giới.Hoạt động hiện tại', '--');
+    var wf = document.getElementById('wFather'); if (wf) wf.textContent = _.get(data, 'Thế giới.Cha có ở nhà không', false) ? 'Ở nhà' : 'Đi vắng';
+}
+
+/* ============================================================
+   Hiển thị: nội dung ngăn kéo
+   ============================================================ */
+function buildDrawerContent(charKey) {
+    var cfg = CHARS[charKey];
+    if (!cfg) return;
+
+    var data = getMVUData();
+    var stage = _.get(data, cfg.dataKey + '.Trạng thái quan hệ', '--');
+    var profile = getProfile(charKey, stage);
+
+    var titleEl = document.getElementById('drawerTitle');
+    if (titleEl) titleEl.textContent = profile.name + ' · Chi tiết đầy đủ';
+
+    var tabsAvailable = [];
+    if (cfg.hasChapter) tabsAvailable.push('chapter');
+    if (cfg.hasMilestone) tabsAvailable.push('milestone');
+    if (cfg.hasCount) tabsAvailable.push('count');
+    if (cfg.hasMark) tabsAvailable.push('mark');
+    if (tabsAvailable.indexOf(currentDrawerTab) === -1) {
+        currentDrawerTab = tabsAvailable[0];
+    }
+
+    var tabs = [];
+    if (cfg.hasChapter) tabs.push({ key: 'chapter', label: 'Chương' });
+    if (cfg.hasMilestone) tabs.push({ key: 'milestone', label: 'Cột mốc' });
+    if (cfg.hasCount) tabs.push({ key: 'count', label: 'Đếm số lần' });
+    if (cfg.hasMark) tabs.push({ key: 'mark', label: 'Dấu hiệu' });
+
+    var tabsEl = document.getElementById('drawerTabs');
+    var tabsHtml = '';
+    for (var i = 0; i < tabs.length; i++) {
+        var activeCls = (tabs[i].key === currentDrawerTab) ? ' active' : '';
+        tabsHtml += '<button class="drawer-tab' + activeCls + '" data-tab="' + tabs[i].key + '" onclick="switchTab(this)">' + tabs[i].label + '</button>';
+    }
+    if (tabsEl) tabsEl.innerHTML = tabsHtml;
+
+    var contentEl = document.getElementById('drawerContent');
+    var html = '';
+
+    /* Thẻ giới thiệu nhân vật (bấm ảnh để phóng to) */
+    html += '<div class="char-hero">' +
+            '<div class="char-hero-avatar" onclick="openImageOverlay(\'' + profile.avatar + '\')">' +
+            '<img src="' + profile.avatar + '" alt="' + profile.name + '" />' +
+            '</div>' +
+            '<div class="char-hero-text">' +
+            '<div class="name">' + profile.name + '</div>' +
+            '<div class="sub">' + profile.subtitle + '</div>' +
+            '<div class="desc">' + profile.desc + '</div>' +
+            '</div>' +
+            '<div class="relation">' + stage + '</div>' +
+            '</div>';
+
+    /* Trang chương */
+    if (cfg.hasChapter) {
+        var cur = _.get(data, 'Sự kiện.Chương hiện tại', 'Chương 1');
+        var curNum = parseInt(String(cur).replace(/[^\d]/g, ''), 10) || 1;
+        var name = CHAPTER_NAMES[cur] || '';
+        var activeC = (currentDrawerTab === 'chapter') ? ' active' : '';
+        html += '<div class="drawer-pane' + activeC + '" id="pane-chapter">' +
+                '<div class="chapter-progress">' +
+                '<div class="label">Chương hiện tại</div>' +
+                '<div class="value">' + cur + (name ? ' ' + name : '') + '<span class="suffix"> ' + curNum + '/120</span></div>' +
+                '<div class="bar"><div class="fill" style="width:' + (curNum / 120 * 100) + '%"></div></div>' +
+                '</div>' +
+                '<div class="timeline">';
+        var events = _.get(data, 'Sự kiện.Chương', {}) || {};
+        for (var n = 1; n <= 120; n++) {
+            var key = 'Chương ' + n;
+            var chName = CHAPTER_NAMES[key] || '';
+            var done = events && events[key] === true;
+            var cls = done ? 'done' : (n === curNum ? 'current' : '');
+            html += '<div class="timeline-item ' + cls + '"><span class="num">' + key + '</span>' + (chName || '—') + '</div>';
+        }
+        html += '</div></div>';
+    }
+
+    /* Trang cột mốc */
+    if (cfg.hasMilestone) {
+        var m = _.get(data, cfg.dataKey + '.Cột mốc', {}) || {};
+
+        var activeM = (currentDrawerTab === 'milestone') ? ' active' : '';
+        html += '<div class="drawer-pane' + activeM + '" id="pane-milestone"><div class="milestone-grid">';
+        for (var j = 0; j < cfg.milestones.length; j++) {
+            var mn = cfg.milestones[j];
+            var ok = m[mn] === true;
+            html += '<div class="milestone-item ' + (ok ? 'done' : 'undone') + '">' +
+                    '<span class="check">' + (ok ? '\u2713' : '\u2717') + '</span>' + mn + '</div>';
+        }
+        html += '</div></div>';
+    }
+
+    /* Trang đếm số lần */
+    if (cfg.hasCount) {
+        var c = _.get(data, cfg.dataKey + '.Đếm số lần', {}) || {};
+
+        var activeC2 = (currentDrawerTab === 'count') ? ' active' : '';
+        html += '<div class="drawer-pane' + activeC2 + '" id="pane-count"><div class="count-list">';
+        for (var k = 0; k < cfg.counts.length; k++) {
+            var cn = cfg.counts[k];
+            html += '<div class="count-item"><span class="count-label">' + cn + '</span>' +
+                    '<span class="count-value">' + (Number(c[cn]) || 0) + '</span></div>';
+        }
+        html += '</div></div>';
+    }
+
+    /* Trang dấu hiệu */
+    if (cfg.hasMark) {
+        var activeK = (currentDrawerTab === 'mark') ? ' active' : '';
+        html += '<div class="drawer-pane' + activeK + '" id="pane-mark"><div class="mark-list">';
+        for (var x = 0; x < cfg.marks.length; x++) {
+            var mk = cfg.marks[x];
+            var v = _.get(data, cfg.dataKey + '.' + mk.key, false);
+            html += '<div class="mark-item"><span class="mark-label">' + mk.label + '</span>' +
+                    '<span class="mark-value ' + (v ? 'yes' : 'no') + '">' + (v ? mk.yes : mk.no) + '</span></div>';
+        }
+        html += '</div></div>';
+    }
+
+    if (contentEl) contentEl.innerHTML = html;
+}
+
+/* ============================================================
+   Khoá ảnh chụp trạng thái (để chỉ vẽ lại ngăn kéo khi dữ liệu đổi)
+   ============================================================ */
+function getSnapshotKey() {
+    var data = getMVUData();
+    return JSON.stringify({
+        c: _.get(data, 'Sự kiện.Chương hiện tại', ''),
+        cs: _.get(data, 'Sự kiện.Chương', {}),
+        lry: _.get(data, 'Liễu Như Ngọc', {}),
+        yy: _.get(data, 'Chu Y Y', {}),
+        ly: _.get(data, 'Chu Lâm Y', {}),
+        hs: _.get(data, 'Hàn Tố', {})
+    });
+}
+
+/* ============================================================
+   Hàm vẽ chính
+   ============================================================ */
+function render() {
+    renderHeader();
+    renderRoleHero();
+    renderCore();
+    renderOtherChars();
+    renderWorld();
+
+    var d = document.getElementById('drawer');
+    if (d && d.classList.contains('open')) {
+        var key = getSnapshotKey();
+        if (key !== lastSnapshotKey) {
+            lastSnapshotKey = key;
+            var content = document.getElementById('drawerContent');
+            var scrollTop = content ? content.scrollTop : 0;
+            buildDrawerContent(currentDrawerChar);
+            if (content) content.scrollTop = scrollTop;
+        }
+    }
+}
+
+/* ============================================================
+   Thu gọn
+   ============================================================ */
+function toggleFold() {
+    var app = document.getElementById('app');
+    if (!app) return;
+    app.classList.toggle('collapsed');
+    try {
+        localStorage.setItem(FOLD_KEY, app.classList.contains('collapsed') ? 'true' : 'false');
+    } catch (e) {}
+}
+
+/* ============================================================
+   Bảng con
+   ============================================================ */
+function togglePanel(id) {
+    var p = document.getElementById(id);
+    if (p) p.classList.toggle('open');
+}
+
+/* ============================================================
+   Ngăn kéo chi tiết
+   ============================================================ */
+function openDrawer(charKey) {
+    if (!charKey || !CHARS[charKey]) charKey = 'liuruoyu';
+    currentDrawerChar = charKey;
+
+    var cfg = CHARS[charKey];
+    currentDrawerTab = cfg.hasChapter ? 'chapter' : (cfg.hasMilestone ? 'milestone' : (cfg.hasCount ? 'count' : 'mark'));
+
+    lastSnapshotKey = getSnapshotKey();
+    buildDrawerContent(charKey);
+
+    var d = document.getElementById('drawer');
+    if (d) d.classList.add('open');
+
+    var content = document.getElementById('drawerContent');
+    if (content) content.scrollTop = 0;
+}
+
+function closeDrawer() {
+    var d = document.getElementById('drawer');
+    if (d) d.classList.remove('open');
+}
+
+/* ============================================================
+   Tab trong ngăn kéo
+   ============================================================ */
+function switchTab(el) {
+    var tabsWrap = el.parentElement;
+    var drawer = tabsWrap ? tabsWrap.parentElement : null;
+    if (!drawer) return;
+
+    currentDrawerTab = el.dataset.tab;
+
+    var tabs = drawer.querySelectorAll('.drawer-tab');
+    for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+    el.classList.add('active');
+
+    var panes = drawer.querySelectorAll('.drawer-pane');
+    for (var j = 0; j < panes.length; j++) panes[j].classList.remove('active');
+
+    var pane = drawer.querySelector('#pane-' + el.dataset.tab);
+    if (pane) pane.classList.add('active');
+
+    var content = document.getElementById('drawerContent');
+    if (content) content.scrollTop = 0;
+}
+
+/* ============================================================
+   Lớp phủ phóng to ảnh
+   ============================================================ */
+function openImageOverlay(src) {
+    if (!src) return;
+    var overlay = document.getElementById('imageOverlay');
+    var img = document.getElementById('overlayImage');
+    if (!overlay || !img) return;
+    img.src = src;
+    overlay.classList.add('active');
+}
+
+function closeImageOverlay() {
+    var overlay = document.getElementById('imageOverlay');
+    var img = document.getElementById('overlayImage');
+    if (!overlay || !img) return;
+    overlay.classList.remove('active');
+    setTimeout(function () { img.src = ''; }, 400);
+}
+
+/* ============================================================
+   Gắn vào window
+   ============================================================ */
+window.toggleFold = toggleFold;
+window.togglePanel = togglePanel;
+window.openDrawer = openDrawer;
+window.closeDrawer = closeDrawer;
+window.switchTab = switchTab;
+window.openImageOverlay = openImageOverlay;
+window.closeImageOverlay = closeImageOverlay;
+
+/* ============================================================
+   Khởi tạo
+   ============================================================ */
+function init() {
+    try {
+        var saved = localStorage.getItem(FOLD_KEY);
+        var app = document.getElementById('app');
+        if (saved === 'true' && app) app.classList.add('collapsed');
+    } catch (e) {}
+
+    if (typeof waitGlobalInitialized === 'function') {
+        waitGlobalInitialized('Mvu').then(function () {
+            fetchStateFromMVU();
+            render();
+        })['catch'](function () {
+            fetchStateFromMVU();
+            render();
+        });
+    } else {
+        fetchStateFromMVU();
+        render();
+    }
+
+    setInterval(function () {
+        fetchStateFromMVU();
+        render();
+    }, 2000);
+
+    try {
+        if (typeof eventOn === 'function' && typeof Mvu !== 'undefined' && Mvu.events && Mvu.events.VARIABLE_UPDATE_ENDED) {
+            eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, function () {
+                fetchStateFromMVU();
+                render();
+            });
+        }
+    } catch (e) {}
+
+    /* ESC đóng lớp phủ phóng to */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeImageOverlay();
+    });
+}
+
+if (typeof errorCatched === 'function') {
+    $(errorCatched(init));
+} else {
+    $(init);
+}
+
+console.log('Người mẹ xinh đẹp trong lòng bàn tay · Thanh trạng thái đã tải');
+</script>
+
+</body>
+</html>
